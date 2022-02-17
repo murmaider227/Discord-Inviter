@@ -104,7 +104,13 @@ class Discord:
         r = self.session.post(url, headers=headers, verify=False)
         if r.status_code == 200:
             server = r.json()
-            logger.success(f'{username} joined {server["guild"]["name"]} invited by {server["inviter"]["username"]}')
+            try:
+                logger.success(f'{username} joined {server["guild"]["name"]} invited by {server["inviter"]["username"]}')
+            except:
+                pass
+            else:
+                logger.success(
+                    f'{username} joined {server["guild"]["name"]}')
             self.server_id = server['guild']['id']
             return True
         elif r.json()['code'] == 40007:
